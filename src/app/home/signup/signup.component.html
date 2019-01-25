@@ -1,0 +1,86 @@
+<h4 class="text-center"> Reach more by spending less, start controlling today</h4>
+<form #form="ngForm" [formGroup]="signupForm" class="form mt-4" >
+
+  <div class="form-group">
+    <input #emailInput formControlName="email" placeholder="Email" class="form-control" autofocus (submit)="signup()">
+    <ap-vmessage
+      *ngIf="signupForm.get('email').errors?.required && (form.submitted || signupForm.get('email').touched)"
+      text="Email is required" >
+    </ap-vmessage>
+    <ap-vmessage
+      *ngIf="signupForm.get('email').errors?.email && form.submitted"
+      text="Invalid email" >
+    </ap-vmessage>
+  </div>
+
+  <div class="form-group">
+    <input formControlName="firstName" placeholder="First name" class="form-control">
+    <ap-vmessage
+      *ngIf="signupForm.get('firstName').errors?.required && form.submitted"
+      text="Full name is required" >
+    </ap-vmessage>
+    <ap-vmessage
+      *ngIf="signupForm.get('firstName').errors?.minlength && form.submitted"
+      text="Minimum lenght is 2" >
+    </ap-vmessage>
+    <ap-vmessage
+      *ngIf="signupForm.get('firstName').errors?.maxlength && form.submitted"
+      text="Maximun lenght is 40" >
+    </ap-vmessage>
+  </div>
+
+  <div class="form-group">
+    <input formControlName="lastName" placeholder="Last name" class="form-control">
+    <ap-vmessage
+      *ngIf="signupForm.get('lastName').errors?.minlength && form.submitted"
+      text="Minimum lenght is 2" >
+    </ap-vmessage>
+    <ap-vmessage
+      *ngIf="signupForm.get('lastName').errors?.maxlength && form.submitted"
+      text="Maximun lenght is 40" >
+    </ap-vmessage>
+  </div>
+
+  <div class="form-group">
+    <input formControlName="username" placeholder="User name" class="form-control">
+    <ap-vmessage
+      *ngIf="signupForm.get('username').errors?.required && form.submitted"
+      text="User name is required" >
+    </ap-vmessage>
+    <ap-vmessage
+      *ngIf="signupForm.get('username').errors?.minlength && form.submitted"
+      text="Minimum lenght is 2" >
+    </ap-vmessage>
+    <ap-vmessage
+      *ngIf="signupForm.get('username').errors?.maxlength && form.submitted"
+      text="Maximun lenght is 30" >
+    </ap-vmessage>
+    <ap-vmessage
+      *ngIf="signupForm.get('username').errors?.userNameTaken"
+      text="Username already taken" >
+    </ap-vmessage>
+    <small *ngIf="signupForm.get('username').valid" class="text-success">User available</small>
+  </div>
+
+  <div class="form-group">
+    <input formControlName="password" type="password" placeholder="Password" class="form-control">
+    <ap-vmessage
+      *ngIf="signupForm.get('password').errors?.required && form.submitted"
+      text="Password is required" >
+    </ap-vmessage>
+    <ap-vmessage
+      *ngIf="signupForm.get('password').errors?.minlength && form.submitted"
+      text="Minimum lenght is 8" >
+    </ap-vmessage>
+    <ap-vmessage
+      *ngIf="signupForm.get('password').errors?.maxlength && form.submitted"
+      text="Maximun lenght is 14" >
+    </ap-vmessage>
+  </div>
+
+  <button (click)="signup()" class="btn btn-primary btn-block">Register</button>
+
+  <p>Already a user?
+    <a [routerLink]="['/signin']"> Sign In!</a>
+  </p>
+</form>
