@@ -1,0 +1,20 @@
+<div class="mb-3">
+  <p-menubar [model]="itens">
+    <!--<ng-template pTemplate="item" let-item let-i="index">-->
+      <!--//item content-->
+    <!--</ng-template>-->
+    <div>
+      <div *ngIf="(user$ | async) as user; else login">
+        <i class="fa fa-user-circle mr-1"></i>
+        <a class="mr-1">{{user?.firstName}}</a>
+        <button pButton (click)="logout()" label="Logout" icon="fa fa-sign-out"></button>
+      </div>
+
+      <ng-template #login>
+        <button pButton [routerLink]="['/signin']" label="Login" icon="fa fa-sign-in"></button>
+      </ng-template>
+    </div>
+  </p-menubar>
+</div>
+
+
