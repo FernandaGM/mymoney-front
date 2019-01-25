@@ -1,0 +1,35 @@
+<div class="d-flex justify-content-center">
+  <div class="col-6">
+    <p-card styleClass="container">
+      <div class="col-lg-8 col-xs-12 m-auto">
+        <p-chart type="bar" [data]="chartData" [options]="options"></p-chart>
+      </div>
+    </p-card>
+  </div>
+
+  <div class="col-6 align-self-stretch">
+    <p-card styleClass="container">
+      <p-carousel [value]="lastEntries" numVisible="1" autoplayInterval="5000" [circular]="true" pageLinks="4"
+                  headerText="Last 4 entries" styleClass="col-11 m-auto">
+        <ng-template let-entry pTemplate="item">
+          <div class="p-grid ml-2 mr-2">
+
+            <div class="p-col-6">Descrição</div>
+            <div class="p-col-6">{{entry.description}}</div>
+
+            <div class="p-col-6">Valor</div>
+            <div class="p-col-6">{{entry.value | currency }}</div>
+
+            <div class="p-col-6">Data</div>
+            <div class="p-col-6">{{entry.date |  date:"dd/MM/yyyy"}}</div>
+
+            <div class="p-col-6">Categorias</div>
+            <div class="p-col-6">{{entry.categories.toString()}}</div>
+
+          </div>
+        </ng-template>
+      </p-carousel>
+    </p-card>
+  </div>
+</div>
+
