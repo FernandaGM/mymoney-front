@@ -1,15 +1,19 @@
 <div class="d-flex justify-content-center">
   <div class="col-6">
-    <p-card styleClass="container">
-      <div class="col-lg-8 col-xs-12 m-auto">
+    <p-card styleClass="container text-center">
+      <div class="col-lg-8 col-xs-12 m-auto" *ngIf="lastEntries.length; else noEntryDash">
         <p-chart type="bar" [data]="chartData" [options]="options"></p-chart>
       </div>
+      <ng-template #noEntryDash>
+        <ap-vmessage class="align-content-center" text="Sem entradas esse mês">
+        </ap-vmessage>
+      </ng-template>
     </p-card>
   </div>
 
   <div class="col-6 align-self-stretch">
-    <p-card styleClass="container">
-      <p-carousel [value]="lastEntries" numVisible="1" autoplayInterval="5000" [circular]="true" pageLinks="4"
+    <p-card styleClass="container text-center">
+      <p-carousel [value]="lastEntries" *ngIf="lastEntries.length; else noEntry" numVisible="1" autoplayInterval="5000" [circular]="true" pageLinks="4"
                   headerText="Last 4 entries" styleClass="col-11 m-auto">
         <ng-template let-entry pTemplate="item">
           <div class="p-grid ml-2 mr-2">
@@ -29,6 +33,10 @@
           </div>
         </ng-template>
       </p-carousel>
+      <ng-template #noEntry>
+        <ap-vmessage text="Sem entradas esse mês">
+        </ap-vmessage>
+      </ng-template>
     </p-card>
   </div>
 </div>
