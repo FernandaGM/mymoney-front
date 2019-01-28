@@ -3,27 +3,54 @@ import {CommonModule} from "@angular/common";
 
 import {ChartModule} from "primeng/chart";
 import {CardModule} from "primeng/card";
-import {CarouselModule} from "primeng/primeng";
+import {AutoCompleteModule, CalendarModule, CarouselModule, InputTextModule, MultiSelectModule, PaginatorModule} from "primeng/primeng";
+import {TableModule} from "primeng/table";
 
 import {UserComponent} from "./user.component";
 import {ExpenseComponent} from "./expense/expense.component";
 import {IncomeComponent} from "./income/income.component";
 import {DashboardComponent} from "./dashboard/dashboard.component";
 import {UserRoutingModule} from "./user-routing.module";
+import {DashboardService} from "./dashboard/dashboard.service";
+import {DashboardResolver} from "./dashboard/dashboard.resolver";
+import {VmessageModule} from "../shared/component/vmessage/vmessage.module";
+import {DateService} from "./date.service";
+import {NewEntryComponent} from "./entry/new-entry.component";
+import {EditEntryComponent} from "./entry/edit-entry.component";
+import {FilterByDescription} from "./filter-by-description.pipe";
+import {EntryService} from "./entry/entry.service";
+import {ExpenseService} from "./expense/expense.service";
 
 @NgModule({
   declarations: [
     UserComponent,
     ExpenseComponent,
     IncomeComponent,
-    DashboardComponent
+    DashboardComponent,
+    NewEntryComponent,
+    EditEntryComponent,
+    FilterByDescription
   ],
   imports: [
     CommonModule,
     UserRoutingModule,
+    VmessageModule,
     ChartModule,
     CardModule,
-    CarouselModule
+    CarouselModule,
+    AutoCompleteModule,
+    TableModule,
+    PaginatorModule,
+    CalendarModule,
+    MultiSelectModule,
+    InputTextModule
+  ],
+  providers: [
+    DashboardService,
+    DashboardResolver,
+    DateService,
+    EntryService,
+    ExpenseService
   ]
 })
 export class UserModule {}

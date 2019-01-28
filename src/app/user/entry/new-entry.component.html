@@ -1,0 +1,52 @@
+<form #entryForm="ngForm" [formGroup]="form" class="form mt-4" *ngIf="categories; else loadingCategories">
+
+  <!--isIncome-->
+  <div class="form-group">
+    <p-radioButton name="isincome" value="N" label="Despesa" formControlName="isIncome"></p-radioButton>
+    <p-radioButton name="isincome" value="S" label="Receita" formControlName="isIncome"></p-radioButton>
+  </div>
+
+  <!--Descrição-->
+  <div class="form-group">
+    <input formControlName="description" placeholder="Descrição" class="form-control" autofocus >
+    <ap-vmessage
+      *ngIf="form.get('description').errors?.required && entryForm.submitted"
+      text="A descrição é obrigatória" >
+    </ap-vmessage>
+    <ap-vmessage
+      *ngIf="form.get('description').errors?.maxlength && entryForm.submitted"
+      text="Tamanho maximo de 40 caracteres" >
+    </ap-vmessage>
+  </div>
+
+  <!--Valor-->
+  <div class="form-group">
+    <input formControlName="value" placeholder="Valor" class="form-control">
+    <ap-vmessage
+      *ngIf="form.get('value').errors?.required && entryForm.submitted"
+      text="O valor é obrigatório" >
+    </ap-vmessage>
+  </div>
+
+  <!--Data-->
+  <div class="form-group">
+    <p-calendar formControlName="data" [locale]="pt" placeholder="Data lançamento" class="form-control"></p-calendar>
+    <ap-vmessage
+      *ngIf="form.get('data').errors?.required && entryForm.submitted"
+      text="A data é obrigatória">
+    </ap-vmessage>
+  </div>
+
+  <!--Categorias-->
+  <div class="form-group">
+    <p-autoComplete formControlName="categories" [suggestions]="filteredCategories" (completeMethod)="filterCategories($event)" styleClass="form-control"
+                    [minLength]="1" placeholder="Categorias" field="name" [multiple]="true">
+    </p-autoComplete>
+  </div>
+
+  <button (click)="save($event)" class="btn btn-primary btn-block">Salvar</button>
+</form>
+
+<ng-template #loadingCategories>
+  <p>Carregando categorias</p>
+</ng-template>

@@ -1,0 +1,30 @@
+<div class="col-8 offset-2">
+  <p-card styleClass="container text-center">
+    <ng-template *ngIf="(total$ | async) as total; else noExpense">
+      <input id="filter" type="text" size="30" pInputText ([ngModel])="filter" />
+      <label for="filter">Username</label>
+      <p-table *ngIf="(expenses$ | async) as expenses" [value]="expenses | filterByDescription: filter">
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th>Descrição</th>
+            <th>Valor</th>
+            <th>Data</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-expense>
+          <tr>
+            <td>{{expense["description"]}}</td>
+            <td>{{expense["value"] | currency }}</td>
+            <td>{{expense["createdAt"] | date }}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+      <p-paginator [rows]="10" [totalRecords]="total" (onPageChange)="paginate($event)"></p-paginator>
+    </ng-template>
+    <ng-template #noExpense>
+      <ap-vmessage text="Sem despesas lançadas no mês"></ap-vmessage>
+    </ng-template>
+  </p-card>
+</div>
+
+
