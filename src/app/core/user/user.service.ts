@@ -35,7 +35,7 @@ export class UserService {
     const token = this.tokenService.getToken();
     const user = jwt_decode(token);
     this.userName = user.sub;
-    this.http.post(API + "/user/getuser", {username: user.sub})
+    this.http.get(API + "/user/getuser/" + user.sub)
       .subscribe((resp: myResponse) => {
         if (resp.status === 200) {
           this.userSubject.next(resp.body[0] as User);

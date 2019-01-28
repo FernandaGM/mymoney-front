@@ -13,8 +13,8 @@ export class CategoryService {
   private categorySubject = new BehaviorSubject<Category[]>(null);
 
   constructor(private http: HttpClient) {
-    this.http.get(API + "/categories/getall")
-      .subscribe(resp => {
+    this.http.get(`${API}/categories/getall`)
+      .subscribe((resp: Category[]) => {
         this.categorySubject.next(resp);
       });
   }

@@ -10,7 +10,7 @@ export class DashboardService {
 
   constructor(private http: HttpClient) {}
 
-  getDados(username) {
-    return this.http.get(API + "/users/dashboards/" + username);
+  getDados(username: string, date: Date) {
+    return this.http.get(`${API}/user/dashboards/${username}/${date.getMonth()}/${date.getFullYear()}`);
   }
 }
