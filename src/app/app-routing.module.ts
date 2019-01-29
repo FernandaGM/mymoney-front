@@ -5,6 +5,7 @@ import {MainComponent} from "./home/main/main.component";
 import {SigninComponent} from "./home/signin/signin.component";
 import {SignupComponent} from "./home/signup/signup.component";
 import {LoginGuard} from "./core/auth/login.guard";
+import {NotFoundComponent} from "./errors/not-found/not-found.component";
 
 const routes: Routes = [
   {
@@ -42,6 +43,17 @@ const routes: Routes = [
   {
     path: "user",
     loadChildren: "./user/user.module#UserModule"
+  },
+  {
+    path: "not-found",
+    component: NotFoundComponent,
+    data: {
+      title: "Not found"
+    }
+  },
+  {
+    path: "**",
+    redirectTo: "not-found"
   }
 ];
 

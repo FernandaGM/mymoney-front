@@ -3,7 +3,15 @@ import {CommonModule} from "@angular/common";
 
 import {ChartModule} from "primeng/chart";
 import {CardModule} from "primeng/card";
-import {AutoCompleteModule, CalendarModule, CarouselModule, InputTextModule, MultiSelectModule, PaginatorModule} from "primeng/primeng";
+import {
+  AutoCompleteModule,
+  CalendarModule,
+  CarouselModule,
+  InputTextModule, KeyFilterModule,
+  MultiSelectModule,
+  PaginatorModule,
+  PanelModule, RadioButtonModule
+} from "primeng/primeng";
 import {TableModule} from "primeng/table";
 
 import {UserComponent} from "./user.component";
@@ -20,6 +28,8 @@ import {EditEntryComponent} from "./entry/edit-entry.component";
 import {FilterByDescription} from "./filter-by-description.pipe";
 import {EntryService} from "./entry/entry.service";
 import {ExpenseService} from "./expense/expense.service";
+import {ReactiveFormsModule} from "@angular/forms";
+import {CategoryService} from "./category/category.service";
 
 @NgModule({
   declarations: [
@@ -33,6 +43,7 @@ import {ExpenseService} from "./expense/expense.service";
   ],
   imports: [
     CommonModule,
+    ReactiveFormsModule,
     UserRoutingModule,
     VmessageModule,
     ChartModule,
@@ -43,11 +54,15 @@ import {ExpenseService} from "./expense/expense.service";
     PaginatorModule,
     CalendarModule,
     MultiSelectModule,
-    InputTextModule
+    InputTextModule,
+    PanelModule,
+    RadioButtonModule,
+    KeyFilterModule
   ],
   providers: [
     DashboardService,
     DashboardResolver,
+    CategoryService,
     DateService,
     EntryService,
     ExpenseService

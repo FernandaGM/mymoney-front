@@ -2,7 +2,6 @@ import {Component, OnInit} from "@angular/core";
 import {DashboardService} from "./dashboard.service";
 import {ActivatedRoute} from "@angular/router";
 import {Entry} from "../entry/entry";
-import {Observable} from "rxjs";
 import {DateService} from "../date.service";
 import {UserService} from "../../core/user/user.service";
 
@@ -57,6 +56,10 @@ export class DashboardComponent implements OnInit {
         this.lastEntries = [];
       }
 
+    }, error => {
+      console.log(error);
+      this.chartData = [];
+      this.lastEntries = [];
     });
 
     this.dateService.getMonth().subscribe(month => {
@@ -70,11 +73,17 @@ export class DashboardComponent implements OnInit {
             this.chartData = [];
             this.lastEntries = [];
           }
+        }, error => {
+          console.log(error);
         });
       } else {
         this.chartData = [];
         this.lastEntries = [];
       }
+    }, error => {
+      console.log(error);
+      this.chartData = [];
+      this.lastEntries = [];
     });
 
   }

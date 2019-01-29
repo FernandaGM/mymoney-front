@@ -29,8 +29,7 @@ export class NewEntryComponent implements OnInit {
       "Setembro", "Outubro", "Novembro", "Dezembro"],
     monthNamesShort: ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"],
     today: "Hoje",
-    clear: "Limpar",
-    dateFormat: "dd/mm/yy"
+    clear: "Limpar"
   };
 
   constructor(
@@ -41,7 +40,12 @@ export class NewEntryComponent implements OnInit {
     private router: Router) {}
 
   ngOnInit(): void {
-    this.categoryService.getCategories().subscribe(categories => this.categories = categories);
+    this.categoryService.getCategories().subscribe(
+      categories => this.categories = categories,
+      error => {
+        console.log(error);
+      }
+    );
     this.form = this.formBuilder.group({
       description: ["",
         [
@@ -83,13 +87,19 @@ export class NewEntryComponent implements OnInit {
 
     const newEntry = this.form.getRawValue() as Entry;
 
-    this.entryService.saveEntry(newEntry, this.userService.getUserName()).subscribe(ok => {
-      if (ok) {
-        this.form.reset();
-        this.router.navigate(["/user/dashboards"]);
-        // Adicionar mensagem
-      }
-    }, error1 => console.log(error1.getMessage));
+    alert(newEntry);
+
+    console.log(newEntry);
+
+    // this.entryService.saveEntry(newEntry, this.userService.getUserName())
+    //   .subscribe(ok => {
+    //     if (ok) {
+    //       this.form.reset();
+    //       this.router.navigate(["/user/dashboards"]);
+    //       // Adicionar mensagem
+    //     }
+    //   }, error1 => console.log(error1.getMessage)
+    //   );
 
   }
 

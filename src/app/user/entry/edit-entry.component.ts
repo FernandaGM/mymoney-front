@@ -21,6 +21,8 @@ export class EditEntryComponent implements OnInit {
     this.categories$ = this.categoryService.getCategories();
     this.activatedRoute.params.subscribe(() => {
       this.entry = this.activatedRoute.snapshot.data["entry"];
+    }, error => {
+      console.log(error);
     });
   }
 }

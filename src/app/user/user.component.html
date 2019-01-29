@@ -1,17 +1,19 @@
 <p-panel>
   <p-header>
-    <p-calendar
-      styleClass="float-left"
-      [(ngModel)]="month"
-      view="month"
-      [locale]="pt"
-      dateFormat="MM - yy"
-      [yearNavigator]="true"
-      yearRange="2000:2030"
-      [readonlyInput]="true"
-      (onSelect)="selected($event)" >
-    </p-calendar>
-    <p-button styleClass="float-right" label="Novo lançamento" icon="fa fa-plus" [routerLink]="['/user/new-entry']"></p-button>
+    <div class="container-fluid d-flex justify-content-between align-items-center">
+      <p-calendar
+        styleClass="p-1"
+        [(ngModel)]="month"
+        view="month"
+        [locale]="pt"
+        dateFormat="MM - yy"
+        [yearNavigator]="true"
+        yearRange="2000:2030"
+        [readonlyInput]="true"
+        (onSelect)="selected($event)" >
+      </p-calendar>
+      <p-button label="Novo lançamento" styleClass="border-0" icon="fa fa-plus" [routerLink]="['/user/new-entry']"></p-button>
+    </div>
   </p-header>
   <router-outlet></router-outlet>
 </p-panel>

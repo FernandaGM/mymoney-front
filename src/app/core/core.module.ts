@@ -1,7 +1,7 @@
 import {NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {RouterModule} from "@angular/router";
-import {ButtonModule, MenubarModule, MenuModule} from "primeng/primeng";
+import {ButtonModule, MenubarModule, MenuModule, SplitButtonModule} from "primeng/primeng";
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
 
 import {HeaderComponent} from "./header/header.component";
@@ -16,7 +16,8 @@ import {RequestInterceptor} from "./auth/request.interceptor";
     MenuModule,
     RouterModule,
     MenubarModule,
-    ButtonModule
+    ButtonModule,
+    SplitButtonModule
   ],
   exports: [
     HeaderComponent

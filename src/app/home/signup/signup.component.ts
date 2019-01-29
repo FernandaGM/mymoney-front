@@ -78,7 +78,7 @@ export class SignupComponent implements OnInit {
 
       this.signupService.signup(newUser)
         .subscribe(
-          () => this.router.navigate([""]),
+          () => this.router.navigate(["/signin"]),
           error => console.log(error.message)
         );
     }

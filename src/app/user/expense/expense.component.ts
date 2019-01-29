@@ -38,6 +38,8 @@ export class ExpenseComponent implements OnInit {
       this.month = month;
       this.total$ = this.expenseService.getTotalMonthExpenses(this.userService.getUserName(), this.month);
       this.fetchExpenses();
+    }, error => {
+      console.log(error);
     });
   }
 

@@ -12,6 +12,7 @@ import {Router} from "@angular/router";
 export class HeaderComponent implements OnInit {
 
   itens: MenuItem[];
+  adminItens: MenuItem[];
   user$: Observable<User>;
 
   constructor(
@@ -36,14 +37,23 @@ export class HeaderComponent implements OnInit {
           {
             label: "Expenses",
             routerLink: ["/user/expense"]
+          }];
+        this.adminItens = [
+          {
+            label: "Reset password",
+            icon: "fa fa-key",
+            routerLink: ["/admin/reset-password"]
           },
           {
-            label: "Administration",
-            items: [
-              {label: "Edit Profile", icon: "fa fa-user-edit", routerLink: ["/admin/edit-profile"]},
-              {label: "Reset password", icon: "fa fa-key", routerLink: ["/admin/password-reset"]}
-            ]
-          }];
+            label: "Edit Profile",
+            routerLink: ["/admin/edit-profile"]
+          },
+          {
+            label: "Logout",
+            icon: "fa fa-sign-out",
+            command: this.logout
+          }
+        ];
       } else {
         this.itens = [
           {
@@ -51,7 +61,10 @@ export class HeaderComponent implements OnInit {
             routerLink: [""]
           }
         ];
+        this.adminItens = [];
       }
+    }, error => {
+      console.log(error);
     });
   }
 

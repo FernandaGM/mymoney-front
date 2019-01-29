@@ -7,6 +7,7 @@ import {HttpClient} from "@angular/common/http";
 
 import {environment} from "../../../environments/environment";
 import {myResponse} from "./myresponse";
+import {UserData} from "../../admin/profile/user-data";
 const API = environment.ApiUrl;
 
 @Injectable({providedIn: "root"})
@@ -33,17 +34,22 @@ export class UserService {
 
   decodeAndNotify() {
     const token = this.tokenService.getToken();
-    const user = jwt_decode(token);
-    this.userName = user.sub;
-    this.http.get(API + "/user/getuser/" + user.sub)
-      .subscribe((resp: myResponse) => {
-        if (resp.status === 200) {
-          this.userSubject.next(resp.body[0] as User);
-        } else {
-          this.userSubject.next(null);
+    const data = jwt_decode(token);
+    this.userName = data.sub;
+    this.http.get(`${API}/user/getuser/${data.sub}`)
+      .subscribe((user: User) => {
+        if (!user) {
+          this.userName = "";
         }
+        this.userSubject.next(user);
+      }, error => {
+        console.log(error);
       });
 
+  }
+
+  getUserData() {
+    return this.http.get<UserData>(`${API}/user/getuserdata/${this.userName}`);
   }
 
   logout() {
@@ -52,7 +58,7 @@ export class UserService {
   }
 
   isLogged() {
-    return this.tokenService.hasToken();
+    return this.userName !== "";
   }
 
   getUserName() {

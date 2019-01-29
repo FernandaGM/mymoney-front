@@ -7,7 +7,7 @@
       <div *ngIf="(user$ | async) as user; else login">
         <i class="fa fa-user-circle mr-1"></i>
         <a class="mr-1">{{user?.firstName}}</a>
-        <button pButton (click)="logout()" label="Logout" icon="fa fa-sign-out"></button>
+        <p-splitButton label="Profile" icon="fa fa-user" (onClick)="router.navigate(['/admin/profile']);" [model]="adminItens"></p-splitButton>
       </div>
 
       <ng-template #login>

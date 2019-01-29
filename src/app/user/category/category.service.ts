@@ -16,6 +16,8 @@ export class CategoryService {
     this.http.get(`${API}/categories/getall`)
       .subscribe((resp: Category[]) => {
         this.categorySubject.next(resp);
+      }, error => {
+        console.log(error);
       });
   }
 
