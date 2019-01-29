@@ -1,10 +1,11 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 
-import {AdministrationComponent} from "./administration.component";
 import {AuthGuard} from "../core/auth/auth.guard";
+import {AdministrationComponent} from "./administration.component";
 import {ProfileComponent} from "./profile/profile.component";
 import {ResetPasswordComponent} from "./reset-password/reset-password.component";
+import {EditProfileComponent} from "./edit-profile/edit-profile.component";
 
 const routes: Routes = [
   {
@@ -13,14 +14,21 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     children: [
       {
-        path: "edit-profile",
+        path: "profile",
         component: ProfileComponent,
         data: {
           title: "Profile"
         }
       },
       {
-        path: "password-reset",
+        path: "edit-profile",
+        component: EditProfileComponent,
+        data: {
+          title: "Edit Profile"
+        }
+      },
+      {
+        path: "reset-password",
         component: ResetPasswordComponent,
         data: {
           title: "Reset password"

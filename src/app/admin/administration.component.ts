@@ -1,13 +1,20 @@
 import { Component, OnInit } from "@angular/core";
 
+import {UserService} from "../core/user/user.service";
+import {User} from "../core/user/user";
+import {Observable} from "rxjs";
+
 @Component({
   templateUrl: "./administration.component.html",
 })
 export class AdministrationComponent implements OnInit {
 
-  constructor() { }
+  user: User;
+
+  constructor(private userService: UserService) { }
 
   ngOnInit() {
+    this.userService.getUser().subscribe(user => this.user = user );
   }
 
 }

@@ -1,0 +1,62 @@
+<div *ngIf="(userData$ | async) as userData" class="d-flex justify-content-around">
+  <div class="col-6">
+    <p-card styleClass="container">
+      <div class="row mb-2">
+        <div class="col-lg-2 col-sm-6 font-weight-bold">Nome: </div>
+        <div class="col-lg-10 col-sm-6">{{userData.user.firstName}} {{userData.user.lastName}}</div>
+      </div>
+      <div class="row mb-2">
+        <div class="col-lg-2 col-sm-6 font-weight-bold">Email: </div>
+        <div class="col-lg-10 col-sm-6">{{userData.user.email}}</div>
+      </div>
+      <div class="row">
+        <div class="col-lg-2 col-sm-6 font-weight-bold">Telefone: </div>
+        <div class="col-lg-10 col-sm-6">{{userData.user.phone}}</div>
+      </div>
+    </p-card>
+  </div>
+  <div class="col-6 align-self-stretch">
+    <p-card styleClass="container">
+      <p-fieldset>
+        <p-header>Despesas</p-header>
+        <div class="d-flex text-center">
+          <div class="col">
+            <span class="font-weight-bold">Total</span>
+            <br />
+            {{userData.totalDespesas | currency: "BRL":'symbol':'1.2-2':'pt-BR'}}
+          </div>
+          <div class="col">
+            <span class="font-weight-bold">Quantidade</span>
+            <br />
+            {{userData.qtdDespesas}}
+          </div>
+          <div class="col">
+            <span class="font-weight-bold">Média</span>
+            <br />
+            {{(userData.qtdDespesas > 0 ? (userData.totalDespesas/userData.qtdDespesas) : 0) | currency: "BRL":'symbol':'1.2-2':'pt-BR'}}
+          </div>
+        </div>
+      </p-fieldset>
+      <p-fieldset>
+        <p-header>Receitas</p-header>
+        <div class="d-flex text-center">
+          <div class="col">
+            <span class="font-weight-bold">Total</span>
+            <br />
+            {{userData.totalReceitas | currency: "BRL":'symbol':'1.2-2':'pt-BR'}}
+          </div>
+          <div class="col">
+            <span class="font-weight-bold">Quantidade</span>
+            <br />
+            {{userData.qtdReceitas}}
+          </div>
+          <div class="col">
+            <span class="font-weight-bold">Média</span>
+            <br />
+            {{(userData.qtdReceitas > 0 ? (userData.totalReceitas/userData.qtdReceitas) : 0) | currency: "BRL":'symbol':'1.2-2':'pt-BR'}}
+          </div>
+        </div>
+      </p-fieldset>
+    </p-card>
+  </div>
+</div>
