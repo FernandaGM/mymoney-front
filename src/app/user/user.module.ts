@@ -20,7 +20,6 @@ import {IncomeComponent} from "./income/income.component";
 import {DashboardComponent} from "./dashboard/dashboard.component";
 import {UserRoutingModule} from "./user-routing.module";
 import {DashboardService} from "./dashboard/dashboard.service";
-import {DashboardResolver} from "./dashboard/dashboard.resolver";
 import {VmessageModule} from "../shared/component/vmessage/vmessage.module";
 import {DateService} from "./date.service";
 import {NewEntryComponent} from "./entry/new-entry.component";
@@ -61,7 +60,6 @@ import {CategoryService} from "./category/category.service";
   ],
   providers: [
     DashboardService,
-    DashboardResolver,
     CategoryService,
     DateService,
     EntryService,

@@ -1,4 +1,4 @@
-import {Component, OnInit} from "@angular/core";
+import {Component, OnDestroy, OnInit} from "@angular/core";
 import {ExpenseService} from "./expense.service";
 import {Entry} from "../entry/entry";
 import {Observable} from "rxjs";
@@ -12,7 +12,7 @@ import {Category} from "../category/category";
     ExpenseService
   ]
 })
-export class ExpenseComponent implements OnInit {
+export class ExpenseComponent implements OnInit, OnDestroy {
 
   expenses$: Observable<Entry[]>;
   filter = "";
@@ -20,6 +20,7 @@ export class ExpenseComponent implements OnInit {
   month: Date;
   total$: Observable<number>;
   categories: Category[];
+  subscription;
 
   constructor(
     private expenseService: ExpenseService,
@@ -29,18 +30,18 @@ export class ExpenseComponent implements OnInit {
 
   ngOnInit(): void {
     this.page = 0;
-    this.month = new Date();
-    this.total$ = this.expenseService.getTotalMonthExpenses(this.userService.getUserName(), this.month);
 
-    this.fetchExpenses();
-
-    this.dateService.getMonth().subscribe(month => {
+    this.subscription = this.dateService.getMonth().subscribe(month => {
       this.month = month;
       this.total$ = this.expenseService.getTotalMonthExpenses(this.userService.getUserName(), this.month);
       this.fetchExpenses();
     }, error => {
       console.log(error);
     });
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
   paginate(event) {

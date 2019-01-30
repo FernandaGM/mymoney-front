@@ -6,7 +6,6 @@ import {UserComponent} from "./user.component";
 import {ExpenseComponent} from "./expense/expense.component";
 import {IncomeComponent} from "./income/income.component";
 import {DashboardComponent} from "./dashboard/dashboard.component";
-import {DashboardResolver} from "./dashboard/dashboard.resolver";
 import {NewEntryComponent} from "./entry/new-entry.component";
 import {EditEntryComponent} from "./entry/edit-entry.component";
 import {EditEntryResolver} from "./entry/edit-entry.resolver";
@@ -34,9 +33,6 @@ const routes: Routes = [
       {
         path: "dashboards",
         component: DashboardComponent,
-        resolve: {
-          dados: DashboardResolver
-        },
         data: {
           title: "Dashboard"
         }

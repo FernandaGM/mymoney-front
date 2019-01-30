@@ -1,4 +1,4 @@
-import {Component, OnInit} from "@angular/core";
+import {Component, OnDestroy, OnInit} from "@angular/core";
 import {DashboardService} from "./dashboard.service";
 import {ActivatedRoute} from "@angular/router";
 import {Entry} from "../entry/entry";
@@ -11,11 +11,12 @@ import {UserService} from "../../core/user/user.service";
     DashboardService
   ]
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnDestroy {
 
   chartData: any;
   options: any;
   lastEntries: Entry[];
+  subscription;
 
   constructor(private dashboardService: DashboardService,
               private activatedRoute: ActivatedRoute,
@@ -46,23 +47,7 @@ export class DashboardComponent implements OnInit {
       }
     };
 
-    this.activatedRoute.params.subscribe(() => {
-      if (this.activatedRoute.snapshot.data["dados"].length > 0) {
-        this.chartData = this.activatedRoute.snapshot.data["dados"][0];
-        this.lastEntries = this.activatedRoute.snapshot.data["dados"][1].filter(entry => entry != null);
-        this.options.scales.yAxes[0].ticks.max = this.activatedRoute.snapshot.data["dados"][2];
-      } else {
-        this.chartData = [];
-        this.lastEntries = [];
-      }
-
-    }, error => {
-      console.log(error);
-      this.chartData = [];
-      this.lastEntries = [];
-    });
-
-    this.dateService.getMonth().subscribe(month => {
+    this.subscription =  this.dateService.getMonth().subscribe(month => {
       if (month != null) {
         this.dashboardService.getDados(this.userService.getUserName(), month).subscribe((dados: any[]) => {
           if (dados.length > 0) {
@@ -86,5 +71,9 @@ export class DashboardComponent implements OnInit {
       this.lastEntries = [];
     });
 
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }
