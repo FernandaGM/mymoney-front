@@ -1,18 +1,22 @@
 <div *ngIf="(userData$ | async) as userData" class="d-flex justify-content-around">
   <div class="col-6">
-    <p-card styleClass="container">
-      <div class="row mb-2">
-        <div class="col-lg-2 col-sm-6 font-weight-bold">Nome: </div>
-        <div class="col-lg-10 col-sm-6">{{userData.user.firstName}} {{userData.user.lastName}}</div>
-      </div>
-      <div class="row mb-2">
-        <div class="col-lg-2 col-sm-6 font-weight-bold">Email: </div>
-        <div class="col-lg-10 col-sm-6">{{userData.user.email}}</div>
-      </div>
-      <div class="row">
-        <div class="col-lg-2 col-sm-6 font-weight-bold">Telefone: </div>
-        <div class="col-lg-10 col-sm-6">{{userData.user.phone}}</div>
-      </div>
+    <p-card styleClass="container h-100">
+      <p-fieldset>
+        <p-header>Detalhes da conta</p-header>
+        <div class="row mb-2">
+          <div class="col-lg-2 col-sm-6 font-weight-bold">Nome: </div>
+          <div class="col-lg-10 col-sm-6">{{userData.user.firstName}} {{userData.user.lastName}}</div>
+        </div>
+        <div class="row mb-2">
+          <div class="col-lg-2 col-sm-6 font-weight-bold">Email: </div>
+          <div class="col-lg-10 col-sm-6">{{userData.user.email}}</div>
+        </div>
+        <div class="row">
+          <div class="col-lg-2 col-sm-6 font-weight-bold">Telefone: </div>
+          <div class="col-lg-10 col-sm-6">{{userData.user.phone}}</div>
+        </div>
+      </p-fieldset>
+      <a [routerLink]="['/admin/edit-profile']" class="d-block text-right">Atualizar informações da conta</a>
     </p-card>
   </div>
   <div class="col-6 align-self-stretch">
