@@ -6,7 +6,6 @@ import * as jwt_decode from "node_modules/jwt-decode";
 import {HttpClient} from "@angular/common/http";
 
 import {environment} from "../../../environments/environment";
-import {myResponse} from "./myresponse";
 import {UserData} from "../../admin/profile/user-data";
 const API = environment.ApiUrl;
 
@@ -38,6 +37,7 @@ export class UserService {
     this.userName = data.sub;
     this.http.get(`${API}/user/getuser/${data.sub}`)
       .subscribe((user: User) => {
+        console.log(user);
         if (!user) {
           this.userName = "";
         }
@@ -63,5 +63,9 @@ export class UserService {
 
   getUserName() {
     return this.userName;
+  }
+
+  updateUser(user) {
+    return this.http.put(`${API}/user/update/${this.userName}`, user);
   }
 }
