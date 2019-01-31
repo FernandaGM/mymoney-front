@@ -2,7 +2,6 @@ import { Component, OnInit } from "@angular/core";
 
 import {UserService} from "../core/user/user.service";
 import {User} from "../core/user/user";
-import {Observable} from "rxjs";
 
 @Component({
   templateUrl: "./administration.component.html",
