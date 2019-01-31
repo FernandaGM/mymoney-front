@@ -31,27 +31,31 @@ export class HeaderComponent implements OnInit {
             routerLink: ["/user/dashboards"]
           },
           {
-            label: "Incomes",
+            label: "Receitas",
             routerLink: ["/user/income"]
           },
           {
-            label: "Expenses",
+            label: "Despesas",
             routerLink: ["/user/expense"]
           }];
         this.adminItens = [
           {
-            label: "Reset password",
+            label: "Redefinir senha",
             icon: "fa fa-key",
             routerLink: ["/admin/reset-password"]
           },
           {
-            label: "Edit Profile",
+            label: "Editar perfil",
             routerLink: ["/admin/edit-profile"]
           },
           {
-            label: "Logout",
+            label: "Sair",
             icon: "fa fa-sign-out",
-            command: this.logout
+            command: () => {
+              console.log("Entrei");
+              this.userService.logout();
+              this.router.navigate(["/"]);
+            }
           }
         ];
       } else {
@@ -66,10 +70,5 @@ export class HeaderComponent implements OnInit {
     }, error => {
       console.log(error);
     });
-  }
-
-  logout() {
-    this.userService.logout();
-    this.router.navigate([""]);
   }
 }

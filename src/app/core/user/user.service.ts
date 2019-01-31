@@ -40,6 +40,7 @@ export class UserService {
         console.log(user);
         if (!user) {
           this.userName = "";
+          this.tokenService.removeToken();
         }
         this.userSubject.next(user);
       }, error => {
@@ -58,7 +59,8 @@ export class UserService {
   }
 
   isLogged() {
-    return this.userName !== "";
+    console.log(this.userName);
+    return this.userName && this.userName !== "";
   }
 
   getUserName() {

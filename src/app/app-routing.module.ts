@@ -6,6 +6,7 @@ import {SigninComponent} from "./home/signin/signin.component";
 import {SignupComponent} from "./home/signup/signup.component";
 import {LoginGuard} from "./core/auth/login.guard";
 import {NotFoundComponent} from "./errors/not-found/not-found.component";
+import {AuthGuard} from "./core/auth/auth.guard";
 
 const routes: Routes = [
   {
@@ -38,11 +39,13 @@ const routes: Routes = [
   },
   {
     path: "admin",
-    loadChildren: "./admin/administration.module#AdministrationModule"
+    loadChildren: "./admin/administration.module#AdministrationModule",
+    canActivate: [AuthGuard]
   },
   {
     path: "user",
-    loadChildren: "./user/user.module#UserModule"
+    loadChildren: "./user/user.module#UserModule",
+    canActivate: [AuthGuard]
   },
   {
     path: "not-found",
