@@ -7,6 +7,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {EntryService} from "./entry.service";
 import {UserService} from "../../core/user/user.service";
 import {Router} from "@angular/router";
+import {MessageService} from "primeng/api";
 
 @Component({
   templateUrl: "./new-entry.component.html"
@@ -17,6 +18,8 @@ export class NewEntryComponent implements OnInit {
   entry: Entry;
   form: FormGroup;
   filteredCategories: Category[];
+
+  money: RegExp = /[0-9]+\.[0-9]{2}$/;
 
   pt = {
     firstDayOfWeek: 0,
@@ -37,7 +40,8 @@ export class NewEntryComponent implements OnInit {
     private categoryService: CategoryService,
     private entryService: EntryService,
     private userService: UserService,
-    private router: Router) {}
+    private router: Router,
+    private messageService: MessageService) {}
 
   ngOnInit(): void {
     this.categoryService.getCategories().subscribe(
@@ -76,7 +80,7 @@ export class NewEntryComponent implements OnInit {
     const query = event.query;
 
     this.filteredCategories = this.categories.filter(category => {
-      return category.name.toLowerCase().indexOf(query.toLowerCase()) === 0;
+      return category.name.toLowerCase().indexOf(query.toLowerCase()) === 0 && category.isIncome === this.form.get("isIncome").value;
     });
 
   }
@@ -87,19 +91,25 @@ export class NewEntryComponent implements OnInit {
 
     const newEntry = this.form.getRawValue() as Entry;
 
-    alert(newEntry);
-
     console.log(newEntry);
 
-    // this.entryService.saveEntry(newEntry, this.userService.getUserName())
-    //   .subscribe(ok => {
-    //     if (ok) {
-    //       this.form.reset();
-    //       this.router.navigate(["/user/dashboards"]);
-    //       // Adicionar mensagem
-    //     }
-    //   }, error1 => console.log(error1.getMessage)
-    //   );
+    this.entryService.saveEntry(newEntry, this.userService.getUserName())
+      .subscribe(ok => {
+        if (ok) {
+          this.form.reset();
+          this.router.navigate(["/user/dashboards"]);
+          this.messageService.add({severity: "success", summary: "OK", detail: "Criada com sucesso"});
+        } else {
+          this.messageService.add({
+            severity: "error",
+            summary: "Ops",
+            detail: "Não foi possivel criar a " + (newEntry.isIncome === "S" ? "receita" : "despesa")
+          });
+        }
+      }, error1 => {
+        console.log(error1.getMessage);
+        this.messageService.add({severity: "error", summary: "Ops", detail: "Ocorreu um erro de comunicação"});
+      });
 
   }
 

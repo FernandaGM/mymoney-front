@@ -5,6 +5,8 @@ import {Observable} from "rxjs";
 import {UserService} from "../../core/user/user.service";
 import {DateService} from "../date.service";
 import {Category} from "../category/category";
+import {Router} from "@angular/router";
+import {MessageService} from "primeng/api";
 
 @Component({
   templateUrl: "./expense.component.html",
@@ -14,7 +16,7 @@ import {Category} from "../category/category";
 })
 export class ExpenseComponent implements OnInit, OnDestroy {
 
-  expenses$: Observable<Entry[]>;
+  expenses: Entry[];
   filter = "";
   page: number;
   month: Date;
@@ -25,6 +27,8 @@ export class ExpenseComponent implements OnInit, OnDestroy {
   constructor(
     private expenseService: ExpenseService,
     private userService: UserService,
+    private router: Router,
+    private messageService: MessageService,
     private dateService: DateService) {
   }
 
@@ -50,8 +54,30 @@ export class ExpenseComponent implements OnInit, OnDestroy {
   }
 
   fetchExpenses() {
-    this.expenses$ = this.expenseService.getMonthExpensesPaginated(this.userService.getUserName(), this.month, this.page);
+    this.expenseService.getMonthExpensesPaginated(this.userService.getUserName(), this.month, this.page)
+      .subscribe(expenses => {
+        this.expenses = expenses;
+      });
   }
 
+  editEntry(expense) {
+    this.router.navigate(["/user/edit-entry", expense.id]);
+  }
 
+  removeExpense(expense) {
+
+    this.expenseService.removeExpense(expense.id).subscribe(
+      ok => {
+         ok ? this.messageService.add({severity: "success", summary: "OK", detail: "Removida com sucesso"}) :
+        this.messageService.add({severity: "error", summary: "Ops", detail: "Não foi possivel remover a despesa"});
+         this.fetchExpenses();
+      }
+        ,
+      error => {
+        console.log(error);
+        this.messageService.add({severity: "error", summary: "Ops", detail: "Não foi possivel remover a despesa"});
+      }
+    );
+
+  }
 }

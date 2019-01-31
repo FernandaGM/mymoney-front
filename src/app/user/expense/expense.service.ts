@@ -19,4 +19,8 @@ export class ExpenseService {
   public getTotalMonthExpenses(username, date): Observable<number> {
     return this.http.get<number>(`${API}/entry/expense/gettotalbyusername/${username}/${date.getMonth()}/${date.getFullYear()}`);
   }
+
+  public removeExpense(expenseId): Observable<boolean> {
+    return this.http.delete<boolean>(`${API}/entry/remove/${expenseId}`);
+  }
 }

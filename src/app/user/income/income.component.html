@@ -1,0 +1,34 @@
+<div class="col-8 offset-2">
+  <p-card styleClass="container text-center" header="Receitas">
+    <div *ngIf="(total$ | async) as total; else noIncome" class="d-flex flex-column">
+      <div class="form-group text-left">
+        <fp-search (typing)="filter = $event" [value]="filter" label="Filtro"></fp-search>
+      </div>
+      <p-table [value]="incomes | filterByDescription: filter">
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th>Descrição</th>
+            <th>Valor</th>
+            <th>Data</th>
+            <th></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-income>
+          <tr>
+            <td>{{income["description"]}}</td>
+            <td>{{income["value"] | currency: "BRL":'symbol':'1.2-2':'pt-BR' }}</td>
+            <td>{{income["data"] | date: "dd/MM/yyyy" }}</td>
+            <td>
+              <p-button icon="fa fa-edit" styleClass="mr-1" (onClick)="editEntry(income)"></p-button>
+              <p-button icon="fa fa-trash" styleClass="ui-button-danger" (onClick)="removeIncome(income)"></p-button>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+      <p-paginator [rows]="10" [totalRecords]="total" (onPageChange)="paginate($event)" styleClass="mt-1"></p-paginator>
+    </div>
+    <ng-template #noIncome>
+      <ap-vmessage text="Sem receitas lançadas no mês"></ap-vmessage>
+    </ng-template>
+  </p-card>
+</div>

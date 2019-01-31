@@ -4,7 +4,7 @@ export interface Entry {
   id: number;
   description: string;
   value: number;
-  createdAt: Date;
+  data: Date;
   isIncome: string;
   categories: Category[];
 }

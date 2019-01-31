@@ -1,30 +1,34 @@
 <div class="col-8 offset-2">
-  <p-card styleClass="container text-center">
-    <ng-template *ngIf="(total$ | async) as total; else noExpense">
-      <input id="filter" type="text" size="30" pInputText ([ngModel])="filter" />
-      <label for="filter">Username</label>
-      <p-table *ngIf="(expenses$ | async) as expenses" [value]="expenses | filterByDescription: filter">
+  <p-card styleClass="container text-center" header="Despesas">
+    <div *ngIf="(total$ | async) as total; else noExpense" class="d-flex flex-column">
+      <div class="form-group text-left">
+        <fp-search (typing)="filter = $event" [value]="filter" label="Filtro"></fp-search>
+      </div>
+      <p-table [value]="expenses | filterByDescription: filter">
         <ng-template pTemplate="header" let-columns>
           <tr>
             <th>Descrição</th>
             <th>Valor</th>
             <th>Data</th>
+            <th></th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-expense>
           <tr>
             <td>{{expense["description"]}}</td>
-            <td>{{expense["value"] | currency }}</td>
-            <td>{{expense["createdAt"] | date }}</td>
+            <td>{{expense["value"] | currency: "BRL":'symbol':'1.2-2':'pt-BR' }}</td>
+            <td>{{expense["data"] | date: "dd/MM/yyyy" }}</td>
+            <td>
+              <p-button icon="fa fa-edit" styleClass="mr-1" (onClick)="editEntry(expense)"></p-button>
+              <p-button icon="fa fa-trash" styleClass="ui-button-danger" (onClick)="removeExpense(expense)"></p-button>
+            </td>
           </tr>
         </ng-template>
       </p-table>
-      <p-paginator [rows]="10" [totalRecords]="total" (onPageChange)="paginate($event)"></p-paginator>
-    </ng-template>
+      <p-paginator [rows]="10" [totalRecords]="total" (onPageChange)="paginate($event)" styleClass="mt-1"></p-paginator>
+    </div>
     <ng-template #noExpense>
       <ap-vmessage text="Sem despesas lançadas no mês"></ap-vmessage>
     </ng-template>
   </p-card>
 </div>
-
-

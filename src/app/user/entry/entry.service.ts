@@ -19,7 +19,7 @@ export class EntryService {
     return this.http.post<boolean>(`${API}/entry/add/${username}`, entry);
   }
 
-  updateEntry(entry: Entry) {
-    return this.http.put<boolean>(`${API}/entry/update/${entry.id}`, entry);
+  updateEntry(id: number, entry: Entry) {
+    return this.http.put<boolean>(`${API}/entry/update/${id}`, entry);
   }
 }

@@ -14,20 +14,21 @@ const routes: Routes = [
   {
     path: "",
     component: UserComponent,
+    canActivateChild: [AuthGuard],
     canActivate: [AuthGuard],
     children: [
       {
         path: "expense",
         component: ExpenseComponent,
         data: {
-          title: "Profile"
+          title: "Despesas"
         }
       },
       {
         path: "income",
         component: IncomeComponent,
         data: {
-          title: "Reset password"
+          title: "Receitas"
         }
       },
       {
@@ -41,7 +42,7 @@ const routes: Routes = [
         path: "new-entry",
         component: NewEntryComponent,
         data: {
-          title: "New Entry"
+          title: "Novo lançamento"
         }
       },
       {
@@ -51,7 +52,7 @@ const routes: Routes = [
           entry: EditEntryResolver
         },
         data: {
-          title: "Edit Entry"
+          title: "Editar lançamento"
         }
       }
     ]

@@ -1,59 +1,61 @@
-<form #entryForm="ngForm" [formGroup]="form" class="form mt-4" *ngIf="categories; else loadingCategories">
+<p-card header="Novo lançamento">
+  <form #entryForm="ngForm" [formGroup]="form" class="form mt-4" *ngIf="categories; else loadingCategories">
 
-  <!--isIncome and data-->
-  <div class="form-group d-flex justify-content-around">
-    <div>
-      <p-radioButton name="isincome" value="N" label="Despesa" formControlName="isIncome" class="mr-2"></p-radioButton>
-      <p-radioButton name="isincome" value="S" label="Receita" formControlName="isIncome"></p-radioButton>
-    </div>
-    <div>
+    <!--isIncome and data-->
+    <div class="form-group d-flex justify-content-around">
+      <div>
+        <p-radioButton name="isincome" value="N" label="Despesa" formControlName="isIncome" class="mr-2"></p-radioButton>
+        <p-radioButton name="isincome" value="S" label="Receita" formControlName="isIncome"></p-radioButton>
+      </div>
+      <div>
       <span class="ui-float-label">
         <p-calendar id="float-input" formControlName="data" [locale]="pt" placeholder="Data lançamento" dateFormat="dd/mm/yy"></p-calendar>
         <label for="float-input">Data</label>
       </span>
-      <ap-vmessage
-        *ngIf="form.get('data').errors?.required && entryForm.submitted"
-        text="A data é obrigatória">
-      </ap-vmessage>
-    </div>
-  </div>
-
-  <!--Descrição e valor-->
-  <div class="form-group">
-    <div class=" col-lg-6 col-sm-12 d-inline-block p-0">
-      <input formControlName="description" class="col-12" placeholder="Descrição" pInputText autofocus >
-      <ap-vmessage
-        *ngIf="form.get('description').errors?.required && entryForm.submitted"
-        text="A descrição é obrigatória" >
-      </ap-vmessage>
-      <ap-vmessage
-        *ngIf="form.get('description').errors?.maxlength && entryForm.submitted"
-        text="Tamanho maximo de 40 caracteres" >
-      </ap-vmessage>
-    </div>
-    <div class=" col-lg-6 col-sm-12 d-inline-block p-0">
-      <div class="ui-inputgroup ui-fluid">
-        <span class="ui-inputgroup-addon">R$</span>
-        <input formControlName="value" placeholder="Valor" pKeyFilter="money" pInputText>
+        <ap-vmessage
+          *ngIf="form.get('data').errors?.required && entryForm.submitted"
+          text="A data é obrigatória">
+        </ap-vmessage>
       </div>
-      <ap-vmessage
-        *ngIf="form.get('value').errors?.required && entryForm.submitted"
-        text="O valor é obrigatório" >
-      </ap-vmessage>
     </div>
-  </div>
 
-  <!--Categorias-->
-  <div class="form-group ui-fluid">
-    <p-autoComplete formControlName="categories" [suggestions]="filteredCategories" (completeMethod)="filterCategories($event)"
-                    [minLength]="1" placeholder="Categorias" field="name" [multiple]="true">
-    </p-autoComplete>
-  </div>
-  <div class="d-flex justify-content-end" >
-    <button pButton (click)="save($event)" >Salvar</button>
-  </div>
-</form>
+    <!--Descrição e valor-->
+    <div class="form-group">
+      <div class=" col-lg-6 col-sm-12 d-inline-block p-0 pr-1">
+        <input formControlName="description" class="col-12" placeholder="Descrição" pInputText autofocus>
+        <ap-vmessage
+          *ngIf="form.get('description').errors?.required && entryForm.submitted"
+          text="A descrição é obrigatória" >
+        </ap-vmessage>
+        <ap-vmessage
+          *ngIf="form.get('description').errors?.maxlength && entryForm.submitted"
+          text="Tamanho maximo de 40 caracteres" >
+        </ap-vmessage>
+      </div>
+      <div class=" col-lg-6 col-sm-12 d-inline-block p-0 pl-1">
+        <div class="ui-inputgroup ui-fluid">
+          <span class="ui-inputgroup-addon">R$</span>
+          <input formControlName="value" placeholder="Valor" [pKeyFilter]="money" [pValidateOnly]="true" pInputText>
+        </div>
+        <ap-vmessage
+          *ngIf="form.get('value').errors?.required && entryForm.submitted"
+          text="O valor é obrigatório" >
+        </ap-vmessage>
+      </div>
+    </div>
 
-<ng-template #loadingCategories>
-  <p>Carregando categorias</p>
-</ng-template>
+    <!--Categorias-->
+    <div class="form-group ui-fluid">
+      <p-autoComplete formControlName="categories" [suggestions]="filteredCategories" (completeMethod)="filterCategories($event)"
+                      [minLength]="1" placeholder="Categorias" field="name" [multiple]="true" [dropdown]="true">
+      </p-autoComplete>
+    </div>
+    <div class="d-flex justify-content-end" >
+      <button pButton (click)="save($event)" label="Salvar"></button>
+    </div>
+  </form>
+
+  <ng-template #loadingCategories>
+    <p>Carregando categorias</p>
+  </ng-template>
+</p-card>

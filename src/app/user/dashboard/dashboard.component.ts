@@ -4,6 +4,7 @@ import {ActivatedRoute} from "@angular/router";
 import {Entry} from "../entry/entry";
 import {DateService} from "../date.service";
 import {UserService} from "../../core/user/user.service";
+import {Category} from "../category/category";
 
 @Component({
   templateUrl: "./dashboard.component.html",
@@ -15,7 +16,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   chartData: any;
   options: any;
-  lastEntries: Entry[];
+  lastEntries: Entry[] = [];
   subscription;
 
   constructor(private dashboardService: DashboardService,
@@ -50,8 +51,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.subscription =  this.dateService.getMonth().subscribe(month => {
       if (month != null) {
         this.dashboardService.getDados(this.userService.getUserName(), month).subscribe((dados: any[]) => {
+          console.log(dados);
           if (dados.length > 0) {
-            this.chartData = dados[0];
+            this.chartData = {
+              label: dados[0]["label"],
+              datasets: dados[0]["dataset"]
+            };
             this.lastEntries = dados[1].filter(entry => entry != null);
             this.options.scales.yAxes[0].ticks.max = dados[2];
           } else {
@@ -75,5 +80,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+  }
+
+  getCategories(categories: Category[]) {
+    return categories.map(category => category.name).join(", ");
   }
 }

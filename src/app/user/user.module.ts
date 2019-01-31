@@ -29,6 +29,8 @@ import {EntryService} from "./entry/entry.service";
 import {ExpenseService} from "./expense/expense.service";
 import {ReactiveFormsModule} from "@angular/forms";
 import {CategoryService} from "./category/category.service";
+import {SearchModule} from "../shared/component/search/search.module";
+import {EditEntryResolver} from "./entry/edit-entry.resolver";
 
 @NgModule({
   declarations: [
@@ -44,6 +46,7 @@ import {CategoryService} from "./category/category.service";
     CommonModule,
     ReactiveFormsModule,
     UserRoutingModule,
+    SearchModule,
     VmessageModule,
     ChartModule,
     CardModule,
@@ -60,6 +63,7 @@ import {CategoryService} from "./category/category.service";
   ],
   providers: [
     DashboardService,
+    EditEntryResolver,
     CategoryService,
     DateService,
     EntryService,
